@@ -33,19 +33,25 @@ class FeedProvider extends ChangeNotifier {
   }
 
   fetchPosts() async {
-    List<Post> postTmpList = [];
-    ApiResult result = await FeedService.fetchPosts();
-    saveIsLoadingPost(false);
-    if (result.success = true) {
-      print(result.message!);
-      List<dynamic> list = jsonDecode(result.response!.body) as List<dynamic>;
-      saveStatus(list.length.toString());
-      list.forEach((postData) {
-        postTmpList.add(Post.fromMap(postData));
-      });
-      savePosts(postTmpList);
-    } else {
-      print("An Error OCCURED");
+    try {
+      List<Post> postTmpList = [];
+      ApiResult result = await FeedService.fetchPosts();
+      saveIsLoadingPost(false);
+      if (result.success = true) {
+        print(result.message!);
+
+        List<dynamic> list = jsonDecode(result.response!.body) as List<dynamic>;
+        saveStatus(list.length.toString());
+        list.forEach((postData) {
+          postTmpList.add(Post.fromMap(postData));
+        });
+        savePosts(postTmpList);
+      } else {
+        print("An Error OCCURED");
+      }
+    } catch (e) {
+      print(e);
+      print("AN ERROR OCCURRED");
     }
   }
 

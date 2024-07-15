@@ -5,6 +5,7 @@ class ApiResult {
   bool success = false;
   String? message;
   http.Response? response;
+
   ApiResult({
     required this.success,
     this.message,
